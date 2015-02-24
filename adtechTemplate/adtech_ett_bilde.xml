@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template:bannerTemplate xmlns:template="http://www.adtech.de" xmlns:adtech="http://www.adtech.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://service.h2.adtech/h2/bannertemplate.xsd">
+    <mainData>
+        <name>Mobil eller Tablet</name>
+        <description></description>
+    </mainData>
+    <variables>
+
+        <!-- Creative Upload -->
+
+        <FileUpload name="creative" caption="Creative Upload" required="true">
+            <regExpPattern>.+\.(gif|GIF|jpg|JPG|PNG|png)</regExpPattern>
+        </FileUpload>
+
+        <!-- Creative Click Through URL -->
+
+        <URL name="click" caption="Creative Click Through URL" required="true" />
+
+        <!-- 3rd Party Impression Pixel URL -->
+
+        <URL name="pixel" caption="3rd Party Impression Pixel UR" required="false"/>
+
+        <!-- Change background color -->
+
+        <Text name="color" caption="Background Color" required="fase" description="Legg inn ønsket bakgrunnsfarge (optional)">
+<default>transparent</default>
+        </Text>
+
+    </variables>
+    <codelist>
+        <code filename="index.html" xml:space="preserve"><![CDATA[
+            <style type="text/css">
+                body {
+                    margin:0;
+                    padding:0;
+                    }
+                #ad {
+                    width: 100%;
+                    height: 250px;
+                    overflow: hidden;
+                    background: [color] url('[creative]');
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+		    cursor: pointer;
+                    }
+            </style>
+            <!--[if lte IE 8]>
+                <style type="text/css">
+                    #ad {
+                        -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='[creative]', sizingMethod='scale')";
+                        }
+                </style>
+            <![endif]-->
+
+            <div id="ad" onclick="window.open( '' + '_ADCLICK_[click]', 'new_window' );">
+                <templatescript> if ( pixel && pixel != '' ) { </templatescript>
+                <img src="[pixel]"  border="0" width="1" height="1" alt=""></img>
+                <templatescript> } </templatescript>
+            </div>
+        ]]></code>
+    </codelist>
+    <filelist>
+    </filelist>
+</template:bannerTemplate>
